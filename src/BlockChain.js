@@ -1,7 +1,7 @@
 const Block = require("./Block");
 
 class BlockChain {
-  constructor(difficulty, genesisBlock = new Block("", "", 0, new Date())) {
+  constructor(difficulty, genesisBlock = new Block("", "", new Date())) {
     this.blockChain = [genesisBlock];
     this.difficulty = difficulty;
   }
