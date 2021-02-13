@@ -1,9 +1,9 @@
 const Block = require("./Block");
 
 class BlockChain {
-  constructor(genesisBlock = new Block("", "", 0, new Date())) {
+  constructor(difficulty, genesisBlock = new Block("", "", 0, new Date())) {
     this.blockChain = [genesisBlock];
-    this.difficulty = 4;
+    this.difficulty = difficulty;
   }
 
   getLatestBlock() {
