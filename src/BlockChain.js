@@ -15,8 +15,23 @@ class BlockChain {
     this.blockChain.push(new Block(data, previousBlock.hash, previousBlock.index + 1, new Date()));
   }
 
-  show() {
-    console.log(this.blockChain);
+  show({ format }) {
+    if (format === "json") {
+      console.log(JSON.stringify(this.blockChain));
+    } else {
+      console.log(this.blockChain);
+    }
+  }
+
+  isValid() {
+    for (let i = 1; i < this.blockChain.length; i++) {
+      const currentBlock = this.blockChain[i];
+
+      if (currentBlock.hash !== currentBlock.createHash()) return false
+      if (this.blockChain[i - 1].hash !== currentBlock.previousHash) return false
+    }
+
+    return true;
   }
 }
 
