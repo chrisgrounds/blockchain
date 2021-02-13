@@ -13,7 +13,7 @@ class BlockChain {
   add(data) {
     const previousBlock = this.getLatestBlock();
 
-    const block = new Block(data, previousBlock.hash, previousBlock.index + 1, new Date());
+    const block = new Block(data, previousBlock.hash, new Date());
 
     block.mine(this.difficulty);
 
