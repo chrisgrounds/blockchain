@@ -3,6 +3,7 @@ const Block = require("./Block");
 class BlockChain {
   constructor(genesisBlock = new Block("", "", 0, new Date())) {
     this.blockChain = [genesisBlock];
+    this.difficulty = 4;
   }
 
   getLatestBlock() {
@@ -12,7 +13,11 @@ class BlockChain {
   add(data) {
     const previousBlock = this.getLatestBlock();
 
-    this.blockChain.push(new Block(data, previousBlock.hash, previousBlock.index + 1, new Date()));
+    const block = new Block(data, previousBlock.hash, previousBlock.index + 1, new Date());
+
+    block.mine(this.difficulty);
+
+    this.blockChain.push(block);
   }
 
   show({ format }) {
