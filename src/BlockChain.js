@@ -1,7 +1,7 @@
 const Block = require("./Block");
 const EC = require("elliptic").ec;
 const ec = new EC("secp256k1");
-const SHA256 = require("crypto-js/sha256");
+const Hash = require("./Hash");
 
 class BlockChain {
   constructor(difficulty, genesisBlock = new Block("", "", Date.now())) {
@@ -19,7 +19,7 @@ class BlockChain {
 
     // verify sign
     const publicKey = ec.keyFromPublic(key.publicKey, "hex");
-    const verification = publicKey.verify(SHA256(data).toString(), sign);
+    const verification = publicKey.verify(new Hash(data).build(), sign);
 
     if (verification) this.pendingData.push({ ...data, sign });
   }

@@ -1,4 +1,4 @@
-const SHA256 = require("crypto-js/sha256");
+const Hash = require("./Hash");
 const EC = require("elliptic").ec;
 const ec = new EC("secp256k1");
 
@@ -19,7 +19,7 @@ class Key {
   }
 
   sign(data) {
-    const hashedData = SHA256(data).toString();
+    const hashedData = new Hash(data).build();
     return this.keyPair.sign(hashedData, "base64").toDER("hex");
   }
 }

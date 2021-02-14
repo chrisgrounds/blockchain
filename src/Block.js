@@ -1,4 +1,4 @@
-const SHA256 = require("crypto-js/sha256");
+const Hash = require("./Hash");
 
 class Block {
   constructor(data, previousHash, timestamp) {
@@ -10,7 +10,7 @@ class Block {
   }
 
   createHash() {
-    return SHA256(JSON.stringify(this.data) + this.previousHash + this.timestamp + this.nonce).toString();
+    return new Hash(JSON.stringify(this.data) + this.previousHash + this.timestamp + this.nonce).build();
   }
 
   mine(difficulty) {
