@@ -1,7 +1,7 @@
 const Block = require("./Block");
 
 class BlockChain {
-  constructor(difficulty, genesisBlock = new Block("", "", new Date())) {
+  constructor(difficulty, genesisBlock = new Block("", "", Date.now())) {
     this.blockChain = [genesisBlock];
     this.difficulty = difficulty;
   }
@@ -13,7 +13,7 @@ class BlockChain {
   add(data) {
     const previousBlock = this.getLatestBlock();
 
-    const block = new Block(data, previousBlock.hash, new Date());
+    const block = new Block(data, previousBlock.hash, Date.now());
 
     block.mine(this.difficulty);
 
