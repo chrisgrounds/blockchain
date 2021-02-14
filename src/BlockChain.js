@@ -4,6 +4,7 @@ class BlockChain {
   constructor(difficulty, genesisBlock = new Block("", "", Date.now())) {
     this.blockChain = [genesisBlock];
     this.difficulty = difficulty;
+    this.pendingData = [];
   }
 
   getLatestBlock() {
@@ -11,13 +12,15 @@ class BlockChain {
   }
 
   add(data) {
-    const previousBlock = this.getLatestBlock();
+    this.pendingData.push(data);
+  }
 
-    const block = new Block(data, previousBlock.hash, Date.now());
-
+  minePendingData() {
+    const block = new Block(this.pendingData, this.getLatestBlock().hash, Date.now());
     block.mine(this.difficulty);
 
     this.blockChain.push(block);
+    this.pendingData = [];
   }
 
   show({ format }) {
