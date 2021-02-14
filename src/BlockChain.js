@@ -1,4 +1,7 @@
 const Block = require("./Block");
+const EC = require("elliptic").ec;
+const ec = new EC("secp256k1");
+const SHA256 = require("crypto-js/sha256");
 
 class BlockChain {
   constructor(difficulty, genesisBlock = new Block("", "", Date.now())) {
@@ -11,8 +14,14 @@ class BlockChain {
     return this.blockChain[this.blockChain.length - 1];
   }
 
-  add(data) {
-    this.pendingData.push(data);
+  add(data, key) {
+    const sign = key.sign(data);
+
+    // verify sign
+    const publicKey = ec.keyFromPublic(key.publicKey, "hex");
+    const verification = publicKey.verify(SHA256(data).toString(), sign);
+
+    if (verification) this.pendingData.push({ ...data, sign });
   }
 
   minePendingData() {
