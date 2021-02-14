@@ -33,11 +33,9 @@ class BlockChain {
   }
 
   show({ format }) {
-    if (format === "json") {
-      console.log(JSON.stringify(this.blockChain));
-    } else {
-      console.log(this.blockChain);
-    }
+    (format === "json")
+      ? console.log(JSON.stringify(this.blockChain))
+      : console.log(this.blockChain);
   }
 
   isValid() {
